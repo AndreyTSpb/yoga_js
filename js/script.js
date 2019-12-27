@@ -6,35 +6,33 @@ window.addEventListener('DOMContentLoaded', function(){
 
 
     function AddHide(key){
-        tabContent[key].classList.add("hide");
-        tabContent[key].classList.remove("show");
+        for(let i = key; i < tabContent.length; i++){
+            tabContent[i].classList.add("hide");
+            tabContent[i].classList.remove("show");
+        }
     }
+    AddHide(1);
 
     function AddShow(key){
-        tabContent[key].classList.add("show");
-        tabContent[key].classList.remove("hide");
+        if(tabContent[key].classList.contains('hide')){
+            tabContent[key].classList.add("show");
+            tabContent[key].classList.remove("hide");
+        }
     }
 
-    function ShowHideTabs(){
-        tab.forEach(function(item, key){
-            if(item.classList.contains('action')){
-                AddShow(key);
-            }else{
-                AddHide(key);
+    info.addEventListener('click', function(event){
+        let target = event.target;
+        //проверка действительно ли это меню табов
+        if(target && target.classList.contains('info-header-tab')){
+            //перебираем все табы и сравниваем с нажатым
+            for(let i = 0; i < tab.length; i++){
+                //если совпало то скрыть все, но открыть нажатый
+                if(target == tab[i]){
+                    AddHide(0);
+                    AddShow(i);
+                }
             }
-            item.addEventListener('click', function(){
-                tab.forEach(function(i, k){
-                    if(k != key){
-                        AddHide(k);
-                        i[k].classList.remove('action');
-                    }
-                });
-                AddShow(key);
-                item.classList.add('action');
-            });
-        });
-    }
-
-    ShowHideTabs();
+        }
+    });
     
 });
