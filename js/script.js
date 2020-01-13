@@ -21,7 +21,7 @@ window.addEventListener('DOMContentLoaded', function(){
             }
         }
 
-        info.addEventListener('click', function(event){
+        info.addEventListener('click', (event)=>{
             let target = event.target;
             //проверка действительно ли это меню табов
             if(target && target.classList.contains(menuItems)){
@@ -176,33 +176,39 @@ window.addEventListener('DOMContentLoaded', function(){
         overlay = document.querySelector('.overlay'),
         close   = document.querySelector('.popup-close');
 
-
-    function showModal(){
+    /**
+     * Показать модалку
+     */
+    function showModal2(){
             overlay.style.display = 'block';
             this.classList.add('more-splash'); //добавим красоты for button
             document.body.style.overflow = 'hidden'; //блокировка прокрутки страницы - включение
+    }
+    /**
+     * Скрыть модалку
+     */
+    function closeModal2(){
+        overlay.style.display = 'none';
+        more.classList.remove('more-splash'); //добавим красоты for button
+        document.body.style.overflow = ''; //блокировка прокрутки страницы - отключение
     }
 
     /**
      * Слушатель на кнопки подробней
      */
     for(let descBtn of descBtns){
-        descBtn.addEventListener('click', showModal);
+        descBtn.addEventListener('click', showModal2);
     }
 
     /**
      * Слушатель на кнопку открывания модалки
      */
-    more.addEventListener('click',showModal);
+    more.addEventListener('click',showModal2);
 
     /**
      * Слушатель на кнопку закрыть модалку
      */
-    close.addEventListener('click', function(){
-        overlay.style.display = 'none';
-        more.classList.remove('more-splash'); //добавим красоты for button
-        document.body.style.overflow = ''; //блокировка прокрутки страницы - отключение
-    });
+    close.addEventListener('click', closeModal2);
 
 
 
