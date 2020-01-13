@@ -113,6 +113,7 @@ window.addEventListener('DOMContentLoaded', function(){
 
 
     //MODAL WINDOW "GET MORE"
+    /*VERSION 1*/
     /**
      * Открытие модального окна
      * Аргумент это класс модалки, чтобы можно было вызывать универсально
@@ -139,6 +140,7 @@ window.addEventListener('DOMContentLoaded', function(){
      * Закрытие модального окна
      */
     function closeModal(name_modal){
+        
         let modal = document.querySelector('#'+name_modal);
         modal.style.display = 'none';
     }
@@ -165,8 +167,42 @@ window.addEventListener('DOMContentLoaded', function(){
         }
     }
 
-    btnShowModal('more');
-    
+    //btnShowModal('more');
+
+    //SHOW MODAL VERSION 2
+
+    let more = document.querySelector('.more'),
+        descBtns = document.querySelectorAll('.description-btn'), 
+        overlay = document.querySelector('.overlay'),
+        close   = document.querySelector('.popup-close');
+
+
+    function showModal(){
+            overlay.style.display = 'block';
+            this.classList.add('more-splash'); //добавим красоты for button
+            document.body.style.overflow = 'hidden'; //блокировка прокрутки страницы - включение
+    }
+
+    /**
+     * Слушатель на кнопки подробней
+     */
+    for(let descBtn of descBtns){
+        descBtn.addEventListener('click', showModal);
+    }
+
+    /**
+     * Слушатель на кнопку открывания модалки
+     */
+    more.addEventListener('click',showModal);
+
+    /**
+     * Слушатель на кнопку закрыть модалку
+     */
+    close.addEventListener('click', function(){
+        overlay.style.display = 'none';
+        more.classList.remove('more-splash'); //добавим красоты for button
+        document.body.style.overflow = ''; //блокировка прокрутки страницы - отключение
+    });
 
 
 
