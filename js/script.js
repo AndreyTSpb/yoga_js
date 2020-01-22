@@ -218,5 +218,57 @@ window.addEventListener('DOMContentLoaded', function(){
 
     //Отображаем блоки по очереди
     showBlock('info-header', 'info-header-tab', 'info-tabcontent');
-    setTimer('timer','2020-01-20');
+    setTimer('timer','2020-01-25');
+
+
+    //FORM
+    let message = {
+        loading: 'Загрузка...',
+        success: 'Спасибо! Мы скоро свяжемся с Вами!',
+        failure: 'Что-то пошло не так...'
+    } 
+
+    let form = document.querySelector('.main-form'),
+        input = form.getElementsByTagName('input'),
+        statusMessage = document.createElement('div');
+
+        statusMessage.classList.add('status');
+
+    //add listener
+    form.addEventListener('submit',(event)=>{
+        event.preventDefault();
+        form.appendChild(statusMessage);
+
+        //request
+        let request = new XMLHttpRequest();
+        request.open('POST', 'server.php');
+        request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+        let formData = new FormData(form); //Для получения всех данных из формы для отправки запроса
+        request.send(formData);
+
+        //conver to JSON
+        let obj = {};
+        formData.forEach(function(val, key){
+            obj[key] = val;
+        });
+        let json = JSON.stringify(obj);
+        console.log(json);
+
+
+        request.addEventListener('readystatechange',()=>{
+            if(request.readyState < 4){
+                statusMessage.innerHTML = message.loading;
+            }else if(request.readyState === 4 && request.status == 200){
+                statusMessage.innerHTML = message.success;
+            }else{
+                statusMessage.innerHTML = message.failure;
+            }
+        });
+
+        //clear input
+        for(let i =0; i<input.length; i++){
+            input[i].value = '';
+        }
+    });
 });
