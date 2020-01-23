@@ -236,9 +236,8 @@ window.addEventListener('DOMContentLoaded', function(){
     //add listener
     forms.forEach(function(form){
 
-        let input = form.getElementsByTagName('input');
-
         form.addEventListener('submit',(event)=>{
+            let input = form.getElementsByTagName('input');
             event.preventDefault();
 
             function sendForm(form){
@@ -274,7 +273,7 @@ window.addEventListener('DOMContentLoaded', function(){
                     statusMessage.innerHTML = mess;
                     console.log('error');
                 })
-                .then(()=>{
+                .finally(()=>{
                     //clear input
                     for(let i =0; i<input.length; i++){
                         input[i].value = '';
