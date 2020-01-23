@@ -230,7 +230,6 @@ window.addEventListener('DOMContentLoaded', function(){
 
     let forms = document.querySelectorAll('.contact-form-free'),
         statusMessage = document.createElement('div');
-
         statusMessage.classList.add('status');
 
     //add listener
@@ -282,4 +281,71 @@ window.addEventListener('DOMContentLoaded', function(){
 
         });
     });
+
+
+///SLIDER
+
+    function slider(idSlider){
+        let slider  = document.getElementById(idSlider);
+        let slideIndex = 1;
+
+
+        if(slider != null){
+            let imgs = slider.querySelectorAll('.slider-item'),
+                prev    = slider.querySelector('.prev'),
+                next    = slider.querySelector('.next'),
+                dotWrap = slider.querySelector('.slider-dots'),
+                dots   = dotWrap.querySelectorAll('.dot');
+
+            showSlide(slideIndex++);
+
+            setInterval(()=>{
+                showSlide(slideIndex++);
+            },5000);
+                
+                
+            function showSlide(slideIndex){
+
+                if(slideIndex > imgs.length){
+                    slideIndex = 1;
+                }
+                if(slideIndex < 1){
+                    slideIndex = imgs.length;
+                }
+
+                imgs.forEach((img)=>img.style.display = "none");
+                dots.forEach((dot)=>dot.classList.remove("dot-active"));
+                imgs[slideIndex-1].style.display = "block";
+                dots[slideIndex-1].classList.add("dot-active");
+            }
+
+            function plusSlide(n){
+                showSlide(slideIndex += n);
+            }
+
+            function currentSlider(n){
+                showSlide(slideIndex = n);
+            }
+
+            prev.addEventListener('click', ()=>{
+                plusSlide(-1);
+            });
+
+            next.addEventListener('click', ()=>{
+                plusSlide(1);
+            });
+
+            dotWrap.addEventListener('click', (event)=>{
+                for(let i=0; i<dots.length + 1; i++){
+                    console.log(event);
+                    if(event.target.classList.contains('dot') && event.target == dots[i-1]){
+                        currentSlider(i);
+                    }
+                }
+            });
+        }
+
+    }
+
+    slider('photo');
 });
