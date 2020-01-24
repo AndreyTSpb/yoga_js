@@ -348,4 +348,39 @@ window.addEventListener('DOMContentLoaded', function(){
     }
 
     slider('photo');
+
+///CALKULATOR
+    let div_price = document.getElementById('price');
+    if(div_price !=null){
+        let persons  = document.querySelectorAll('.counter-block-input')[0],
+            qntDay   = document.querySelectorAll('.counter-block-input')[1],
+            place    = document.getElementById('select'),
+            totalValue = document.getElementById('total'),
+            personsSum = 0,
+            qntDaySum  = 0,
+            total      = 0;
+        persons.addEventListener('input',()=>{
+            personsSum = +persons.value;
+            sumTotal();
+        });
+
+        qntDay.addEventListener('input',()=>{
+            qntDaySum = +qntDay.value;
+            sumTotal();
+        });
+
+        place.addEventListener('click', ()=>{
+            sumTotal();
+        });
+
+        function sumTotal(){
+            if( personsSum > 0 && qntDaySum >0 ){
+                total = personsSum * qntDaySum * place.value * 4000;
+            }else{
+                total = 0;
+            }
+            totalValue.textContent = total;
+        }
+        
+    }
 });
